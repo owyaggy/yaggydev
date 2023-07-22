@@ -1,3 +1,13 @@
+## CURRENT WORKFLOW TO EDIT WEBSITE ##
+- On local machine, make edits to the latest version of the git repository
+- Push changes
+- SSH into server as non-root user `$ ssh drop`
+- Run `$ eval $(ssh-agent)`                                   # removes need to re-enter passphrase
+- Run `$ ssh-add` and enter ssh key passphrase when prompted  # stores the passphrase in ssh-agent
+- Pull the latest version of the git repository
+- Run `$ sudo systemctl restart yaggydev`                     # restarts gunicorn project
+- Changes should be live!
+
 ## COMMON COMMAND LINE COMMANDS ## (EDIT)
 - and other miscellany -
 
