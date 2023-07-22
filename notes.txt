@@ -1,4 +1,4 @@
-## COMMON COMMAND LINE COMMANDS ##
+## COMMON COMMAND LINE COMMANDS ## (EDIT)
 - and other miscellany -
 
 * Navigating the filesystem *
