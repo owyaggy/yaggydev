@@ -1,2 +1,280 @@
-testing a file change
-testing a NEW file change
+## COMMON COMMAND LINE COMMANDS ##
+- and other miscellany -
+
+* Navigating the filesystem *
+$ cd files              # navigate directory to specific directory called 'files'
+$ cd /                  # navigate to primary directory
+$ cd /home/owen/files   # navigate using absolute path (relative path: starting from pwd)
+$ cd ..                 # return to parent directory
+$ cd ../..              # return to parent of parent directory
+$ cd ~                  # return to home directory
+$ cd                    # return to home directory
+$ pwd                   # display present working directory (absolute path to)
+$ ls                    # list files in pwd
+$ ls /home              # list files in specified path
+
+* Creating, modifying and viewing files *
+$ mkdir files                           # creates a directory called files
+$ mkdir -p other/files                  # creates parent directories (use when also creating 'other')
+$ touch ocean.txt                       # creates/modifies file (can do multiple at once)
+$ echo Hello, World!                    # terminal will repeat back 'Hello, World!'
+$ echo "Sammy the Shark" > sammy.txt    # adds text to a new file ('>': redirection operator)
+$ cat sammy.txt                         # "concatenate": show file contents and return to prompt
+$ echo "Mariana Trench???" > ocean.txt  # echo can work on existing files
+$ nano sammy.txt                        # opens simple text editor working on sammy.txt (^O to save)
+$ mv sammy.txt students                 # moves file to directory
+$ mv sammy.txt students/sammy.txt       # same function, but also allows for file renaming
+        # DANGER: no safeties on accidentally overwriting files! they'll be deleted!
+$ mv students/sammy.txt .               # moves file to current directory (pwd)
+$ mv students pupils                    # rename the directory, but maintaining contents
+$ cp sammy.txt alex.txt                 # copy file
+$ cp -r students pupils                 # copy a directory using -r option to copy contents also
+$ less sammy.txt                        # fills terminal window with file
+    # navigation: up/down arrows, page up/down buttons, ctrl-b/f
+    # search: /text_to_find (matching case), n for next result, N for previous
+    # type 'q' to exit the 'less' program
+$ head sammy.txt                        # shows first 10 lines by default
+$ tail sammy.txt                        # shows last 10 lines by default
+
+
+* Autocompletion and history *
+$ history       # summons entire history of command line session
+
+* Working with files from the web
+$ curl example.com/articles/news.txt            # transfers data from web to terminal (text outputted)
+$ curl -O example.com/articles/news.txt         # flag -O downloads file, taking name of remote file
+$ curl -o example.com/articles/news.txt old.txt # flag -o is same, but can rename file as argument
+
+* Removing files and terminating commands *
+$ rm sammy.txt      # irreversibly delete a file
+$ rmdir students    # delete an EMPTY directory
+$ rm -r students    # recursively delete directory (deletes contained files)
+$ exit              # ends session
+$ logout            # ends session
+
+* Using options *
+Options follow a command and are indicated by a single '-' character followed by one or more options,
+which are represented by individual upper- or lower-case letters. Some multi-word options can start
+with --, followed by the flag text. Options are also called flags or switches.
+Options can be combined in several ways: '$ls -l -a', '$ls -al', '$ls -la /home'
+
+Examples for $ls:
+-l: print a "long listing" with extra details (e.g. permissions)
+-a: list all a directory's files, including hidden ones (starting with '.')
+-h: (--human-readable) express memory in understandable units when looking at long listings
+
+* Understanding detailed file info *
+Example: drwxrwxr-x 2 owen owen 4.0K Jul 22 04:00 files
+d: directory (beginning with '-' signifies non-directory file)
+r: read (permission to open and read a file/list directory contents)
+w: write (permission to modify file content, add/remove/rename directory files)
+x: execute (permission to run program files, enter/access directory files)
+
+In order:   d -> directory
+            rwx  -> permissions for directory owner (hyphen indicates absence of that permission)
+            rwx  -> group permissions for directory
+            rwx  -> permissions for other groups that have access to the machine
+            2    -> the number of links in the file (here: 1-link to file, 2-self-referential link)
+            owen -> owner of directory and its creator
+            owen -> group with access to directory
+            4.0K -> memory allocation for the directory
+            date -> date last modified
+
+* Environment variables *
+$ env           # view all current environment variables
+$ echo $PATH    # prints value of PATH variable
+$ VAR=value     # set value of a variable (creates VAR or overwrites existing value)
+$ export PATH=$PATH:/opt/app/bin
+                # add /opt/app/bin to the PATH environment variable (only current session)
+
+The PATH environment variable is a colon-delimited list of directories where the shell will look for
+executable programs or scripts when a command is issued.
+
+* Input/output *
+There are 3 streams of input and output in Linux:
+(0) standard input  (stdin):    Typically carries data from user to program
+(1) standard output (stdout):   Output generated by a program - goes to terminal if not redirected
+(2) standard error  (stderr):   Contains errors generated by a program that failed in some way
+
+Stream Redirection:
+- Overwrite:
+> - standard output
+< - standard input
+2> - standard error
+
+- Append: (don't overwrite destination's existing contents):
+>> - standard output
+<< - standard input
+2>> - standard error
+
+Pipes:
+- redirect a stream from one program to another - one program's output -> another's input
+$ ls | less     # pipes output of ls to the less program, which displays it one line at a time
+- pipes redirect data from one command to another, while > and >> redirect exclusively to files
+
+Filters:
+- find: returns files with filenames that match the argument passed to find
+- grep: returns text that matches the string pattern passed to grep
+- tee: redirects standard input to both standard output and one or more files
+- tr: finds-and-replaces one string with another
+- wc: counts characters, lines, and words
+
+Some common patterns (with examples):
+$ command > file        # redirects standard output of a command to a file
+$ ls ~ > root_dir_contents.txt
+
+$ command >/dev/null    # redirects standard output to nowhere (special file to trash data)
+$ ls > /dev/null
+
+$ command 2> file       # redirects standard error stream to a file, overwriting contents
+$ mkdir '' 2> mkdir_log.txt
+
+$ command >> file       # redirects standard output of a command to a file without overwriting
+$ echo Written to a new file > data.txt
+$ echo Appended content to an existing file >> data.txt
+
+$ command 2>> file      # redirects standard error stream to a file without overwriting
+$ find '' 2> stderr_log.txt
+$ wc '' 2>> stderr_log.txt
+
+$ command | command     # redirects standard output from first command to standard input of second
+$ find /var lib | grep deb
+
+$ command | tee file    # redirects standard output to a file, overwrites contents, then displays output
+$ wc /etc/magic | tee magic_count.txt
+
+* Linux permissions *
+2 main types of users on Linux:
+- system users: used to run non-interactive or background processes on a system
+- regular users: used for logging in and running processes interactively
+Many system users are created by default to run services the OS depends on, as shown in '/etc/passwd'.
+
+In addition, there's the superuser/root user: can access anything on its own server and make system-wide
+changes. Regular users can have 'superuser rights', or 'sudo'.
+
+Groups are collections of 0 or more users. Groups and their members are stored in '/etc/group'.
+
+Every file is owned by a single user and a single group.
+$ ls -l myfile      # shows the permissions of only myfile
+
+
+## FIREWALLS ##
+- If there's a problem loading a webpage that should be hosted on DigitalOcean (DO), check the firewall
+    - Currently enabled: DO Firewall https://cloud.digitalocean.com/networking/firewalls/
+    - There's also the ufw firewall, enabled from the command line:
+
+$ ufw status        # shows what's currently allowed through the firewall
+$ ufw app list      # shows apps available to allow through firewall
+$ ufw allow OpenSSH # allows a particular app
+
+
+## NGINX ##
+Check status of nginx web server:
+$ sudo systemctl status nginx
+
+Start the web server when it is stopped:
+$ sudo systemctl start nginx
+
+Stop the web server:
+$ sudo systemctl stop nginx
+
+Stop and start web server again:
+$ sudo systemctl restart nginx
+
+If making configuration changes take effect without restarting web server (not always possible):
+$ sudo systemctl reload nginx
+
+Disable nginx starting automatically when server boots:
+$ sudo systemctl disable nginx
+
+Enable nginx starting automatically when server boots (default):
+$ sudo systemctl enable nginx
+
+Test to make sure there are no syntax errors in any Nginx files:
+$ sudo nginx -t
+
+Setting up a server block for a new domain:
+$ sudo mkdir -p /var/www/your_domain/html               # making directory for it (-p creates parent dirs)
+$ sudo chown -R $USER:$USER /var/www/your_domain/html   # assign ownership of directory
+$ sudo chmod -R 755 /var/www/your_domain                # test ownership is correct
+$ nano /var/www/your_domain/html/index.html             # makes a landing page - customize as desired
+$ sudo nano /etc/nginx/sites-available/your_domain      # makes a configuration block - see below:
+
+'/etc/nginx/sites-available/your_domain':
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/your_domain/html;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name your_domain www.your_domain;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}
+
+- Then enable file by linking it (see below)
+
+Enable a file in 'sites-available' by creating a link from it to the 'sites-enabled' directory:
+$ sudo ln -s /etc/nginx/sites-available/your_domain /etc/nginx/sites-enabled/
+
+* Important Nginx Files and Directories *
+Content
+- '/var/www/html': Actual web content, by default only the default Nginx page. Can be changed by altering
+  Nginx config files
+
+Server Configuration
+- '/etc/nginx/': The Nginx configuration directory. All the Nginx configuration files reside here.
+- '/etc/nginx/nginx.conf': The main Nginx configuration file. Can be modified to make changes to the Nginx
+  global configuration.
+- '/etc/nginx/sites-available/': The directory where per-site server blocks will be stored. Nginx will not
+  use the configuration files found in this directory unless they are linked to the 'sites-enabled'
+  directory. Typically, all server block configuration is done in this directory, and then enabled by
+  linking to the other directory.
+- '/etc/nginx/sites-enabled/': The directory where enabled per-site server blocks are stored. Typically,
+  these are created by linking to configuration files found in the 'sites-available' directory.
+- '/etc/nginx/snippets': This directory contains configuration fragments that can be included elsewhere in
+  the Nginx configuration. Potentially repeatable configuration segments are good candidates for
+  refactoring into snippets.
+
+Server Logs
+- '/var/log/nginx/access.log': Every request to your server is recorded in this log file unless Nginx is
+  configured to do otherwise.
+- '/var/log/nginx/error.log': Any Nginx errors will be recorded in this log.
+
+## CERTBOT / Automatic SSL
+Certbot is a software client provided by Let's Encrypt that helps automate and simplify the process of
+obtaining and renewing free SSL certificates.
+
+1. Install Certbot
+$ sudo snap install core; sudo snap refresh core    # make sure snap is up-to-date
+$ sudo apt remove certbot                           # remove older version of certbot, if exists
+$ sudo snap install --classic certbot               # install certbot package
+$ sudo ln -s /snap/bin/certbot /usr/bin/certbot     # allow running certbot by typing only 'certbot'
+
+2. Confirm Nginx Configuration
+- 'server_name' in '/etc/nginx/sites-available/example.com' should be set up:
+    ...server_name example.com www.example.com...
+- reload nginx if necessary
+
+3. Allow HTTPS through firewall
+
+4. Obtain SSL Certificate
+$ sudo certbot --nginx -d example.com -d www.example.com    # installs ssl certificate!
+- Automatically redirects http:// to https://
+
+5. Certbot Auto-Renewal
+- Certbot handles this automatically. Let's Encrypt SSL certificates only last for 90 days, and certbot
+  auto-renews it when it is 30 days from expiration by running a check twice a day.
+
+$ sudo systemctl status snap.certbot.renew.service      # check that the timer is working
+$ sudo certbot renew --dry-run                          # test renewal process
+
+## LINKS ##
+Installing Nginx on Ubuntu:
+https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04
+
+Serving Flask Applications with Gunicorn and Nginx on Ubuntu:
+https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-22-04
