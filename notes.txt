@@ -1,4 +1,4 @@
-## CURRENT WORKFLOW TO EDIT WEBSITE ##
+## CURRENT WORKFLOW TO EDIT WEBSITE ## (test?)
 - On local machine, make edits to the latest version of the git repository
 - Push changes
 - SSH into server as non-root user `$ ssh drop`
