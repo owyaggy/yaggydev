@@ -10,6 +10,7 @@ def landing():
 
 @app.route("/backpacking")
 def essay():
+    print("got this far?")
     return send_file('static/pdf/briefing.pdf', attachment_filename='briefing.pdf')
 
 
