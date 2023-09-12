@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def landing():
+    print("test a debugging message")
     return render_template('index.html')
 
 
