@@ -1,4 +1,5 @@
 from flask import Flask, render_template, send_file
+import logging
 
 app = Flask(__name__)
 
@@ -11,8 +12,13 @@ def landing():
 
 @app.route("/backpacking")
 def essay():
-    print("got this far?")
-    return send_file('static/pdf/briefing.pdf', attachment_filename='briefing.pdf')
+    try:
+        print("got this far?")
+        return send_file('static/pdf/briefing.pdf', attachment_filename='briefing.pdf')
+    except UserWarning as Argument:
+        file = open("errors.txt", "a")
+        file.write(str(Argument))
+        file.close()
 
 
 if __name__ == "__main__":
