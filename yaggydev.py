@@ -7,6 +7,12 @@ app = Flask(__name__)
 @app.route("/")
 def landing():
     print("test a debugging message")
+    try:
+        not_a_command()
+    except UserWarning as Argument:
+        file = open("errors.txt", "a")
+        file.write(str(Argument))
+        file.close()
     return render_template('index.html')
 
 
