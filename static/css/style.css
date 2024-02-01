@@ -1,0 +1,24 @@
+:root {
+    --theme-blue: #0A1626;
+    --theme-steel: #A4B5BF;
+    --theme-tan: #BFA380;
+    --theme-beige: #8C7961;
+    --theme-brown: #261911;
+}
+
+body {
+    background-color: var(--theme-blue);
+    color: var(--theme-tan);
+    font-family: "ui-rounded", sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.profile-photo {
+    display: block;
+    margin: 0 auto;
+    width: 30%;
+    border-radius: 50%;
+}
