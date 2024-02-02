@@ -6,19 +6,28 @@
     --theme-brown: #261911;
 }
 
-body {
-    background-color: var(--theme-blue);
-    color: var(--theme-tan);
-    font-family: "ui-rounded", sans-serif;
+/*
+To reference these colors:
+var(--theme-blue)
+*/
+
+#card-title {
+    color: var(--theme-blue);
 }
 
-h1 {
-    text-align: center;
+.card-text {
+    color: var(--theme-blue);
+    /*background-color: var(--theme-beige);*/
 }
 
-.profile-photo {
-    display: block;
-    margin: 0 auto;
-    width: 30%;
-    border-radius: 50%;
+.bi {
+    font-size: 1.75rem;
+    color: var(--theme-steel);
+    opacity: 0.6;
+    animation-duration: 0.8s;
+}
+
+.bi:hover {
+    opacity: 1;
+    animation-duration: 0.8s;
 }
