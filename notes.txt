@@ -260,7 +260,7 @@ obtaining and renewing free SSL certificates.
 
 1. Install Certbot
 $ sudo snap install core; sudo snap refresh core    # make sure snap is up-to-date
-$ sudo apt remove certbot                           # remove older version of certbot, if exists
+$ sudo snap remove certbot                           # remove older version of certbot, if exists NOTE: replaced 'apt' with 'snap'
 $ sudo snap install --classic certbot               # install certbot package
 $ sudo ln -s /snap/bin/certbot /usr/bin/certbot     # allow running certbot by typing only 'certbot'
 
