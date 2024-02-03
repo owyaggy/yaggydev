@@ -19,7 +19,9 @@
 [Serving Flask with Gunicorn and Nginx on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-22-04)
 
 ### Subdomains
+
 [Subdomains with Nginx](https://hostadvice.com/blog/domains/nginx-subdomain/#:~:text=Nginx%20(engine%2Dex)%20is,using%20a%20single%20IP%20address.)
 
 ### Firewalls
+
 [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
