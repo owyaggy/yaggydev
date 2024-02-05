@@ -12,16 +12,21 @@
 8. [SSH Essentials](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
 9. [Domains and DNS](https://docs.digitalocean.com/products/networking/dns/)
 10. [Installing Nginx](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04)
-10. [SSL Certificates](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04)
+11. [SSL Certificates](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04)
 
 ### Serving Flask Applications
 
-[Serving Flask with Gunicorn and Nginx on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-22-04)
+* [Serving Flask with Gunicorn and Nginx on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-22-04)
 
 ### Subdomains
 
-[Subdomains with Nginx](https://hostadvice.com/blog/domains/nginx-subdomain/#:~:text=Nginx%20(engine%2Dex)%20is,using%20a%20single%20IP%20address.)
+* [Subdomains with Nginx](https://hostadvice.com/blog/domains/nginx-subdomain/#:~:text=Nginx%20(engine%2Dex)%20is,using%20a%20single%20IP%20address.)
 
 ### Firewalls
 
-[UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
+* [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
+
+### Domains and DNS
+
+* [Domains and DNS](https://docs.digitalocean.com/products/networking/dns/)
+* [Adding a Subdomain](https://docs.digitalocean.com/products/networking/dns/how-to/add-subdomain/)
