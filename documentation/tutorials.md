@@ -17,6 +17,8 @@
 ### Serving Flask Applications
 
 * [Serving Flask with Gunicorn and Nginx on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-22-04)
+* [Serving Flask with uWSGI and Nginx on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-22-04)
+* [Serving Flask using Docker, uWSGI and Nginx on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-build-and-deploy-a-flask-application-using-docker-on-ubuntu-20-04)
 
 ### Subdomains
 
