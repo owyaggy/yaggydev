@@ -1,40 +1,42 @@
 # Serving Flask Using Docker, uWSGI and Nginx on Ubuntu
 
+## Introduction To Docker
+
 ### Installing Docker
 
 * Update the package list
 
-```commandline
+```shell
 sudo apt update
 ```
 
 * Install prerequisite packages which let `apt` use packages over HTTPS:
 
-```commandline
+```shell
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
 ```
 
 * Then add GPG key for the official Docker repository to the system:
 
-```commandline
+```shell
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 ```
 
 * Add the Docker repository to APT sources:
 
-```commandline
+```shell
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
 * Update the existing package list again to recognize the addition:
 
-```commandline
+```shell
 sudo apt update
 ```
 
 * Ensure installation will be from Docker repo rather than default Ubuntu repo:
 
-```commandline
+```shell
 apt-cache policy docker-ce
 ```
 
@@ -53,13 +55,13 @@ docker-ce:
 
 * Install Docker:
 
-```commandline
+```shell
 sudo apt install docker-ce
 ```
 
 * Check that it's running:
 
-```commandline
+```shell
 sudo systemctl status docker
 ```
 
@@ -86,20 +88,20 @@ ERROR: permission denied while trying to connect to the Docker daemon socket at 
 
 * To avoid needing to type `sudo` whenever running `docker` command, add username to the `docker` group:
 
-```commandline
+```shell
 sudo usermod -aG docker ${USER}
 ```
 
 * To apply new group membership, log out of the server and then back in, or type the following:
 
-```commandline
+```shell
 su - ${USER}
 ```
 
 * The user password will be required
 * Confirm that the user has been added to the `docker` group:
 
-```commandline
+```shell
 groups
 ```
 
@@ -107,7 +109,7 @@ groups
 * If it is necessary to add a user to the `docker` group that isn't currently logged in, that username can be declared
 explicitly:
 
-```commandline
+```shell
 sudo usermod -aG docker owen
 ```
 
@@ -118,25 +120,25 @@ sudo usermod -aG docker owen
 * Using `docker` consists of passing it a chain of options and commands followed by arguments
 * THe syntax takes this form:
 
-```commandline
+```shell
 docker [option] [command] [arguments]
 ```
 
 * To view all available subcommands, type:
 
-```commandline
+```shell
 docker
 ```
 
 * To view the options available to a specific command, type:
 
-```commandline
+```shell
 docker docker-subcommand --help
 ```
 
 * To view system-wide information about Docker, use:
 
-```commandline
+```shell
 docker info
 ```
 
@@ -149,7 +151,7 @@ docker info
 images hosted there
 * To check if it is possible to access and download images from Docker Hub, type:
 
-```commandline
+```shell
 docker run hello-world
 ```
 
@@ -157,7 +159,7 @@ docker run hello-world
 * To search for images available on the Docker Hub, use the `docker` command with the `search` subcommand
 * For example, to search for the Ubuntu image:
 
-```commandline
+```shell
 docker search ubuntu
 ```
 
@@ -167,7 +169,7 @@ project
 * After identifying the image to use, to download it, use the `pull` subcommand
 * Execute the following command to download the official `ubuntu` image:
 
-```commandline
+```shell
 docker pull ubuntu
 ```
 
@@ -177,7 +179,7 @@ subcommand
 the image, then run a container using it
 * To see downloaded images, type:
 
-```commandline
+```shell
 docker images
 ```
 
@@ -191,7 +193,7 @@ docker images
 * As an example, run a container using the latest image of Ubuntu
 * The combination of the **-i** and **-t** switches gives interactive shell access into the container
 
-```commandline
+```shell
 docker run -it ubuntu
 ```
 
@@ -207,20 +209,20 @@ root@3e5d18b36062:/#
 * For example, update the package database inside the container:
   * It's not necessary to prefix commands with `sudo` because the root user is being used
 
-```commandline
+```shell
 root@3e5d18b36062:/# apt update
 ```
 
 * Then install any application in it, for example, Node.js:
 
-```commandline
+```shell
 root@3e5d18b36062:/# apt install nodejs
 ```
 
 * This installs Node.js in the container from the official Ubuntu repository
 * When the installation finishes, verify that Node.js is installed:
 
-```commandline
+```shell
 root@3e5d18b36062:/# node -v
 ```
 
@@ -233,7 +235,7 @@ root@3e5d18b36062:/# node -v
 * After using Docker for a while, there will be many active (running) and inactive containers on the system
 * To view the **active** ones, use:
 
-```commandline
+```shell
 docker ps
 ```
 
@@ -247,14 +249,14 @@ CONTAINER ID        IMAGE               COMMAND             CREATED
   * Both are no longer running, but still exist on the system
 * To view all containers, active and inactive, run `docker ps` with the `-a` switch:
 
-```commandline
+```shell
 docker ps -a
 ```
 
 * The output should show both the `ubuntu` and `hello-world` containers
 * To view the most recently created container, pass it the `-l` switch:
 
-```commandline
+```shell
 docker ps -l
 ```
 
@@ -270,14 +272,14 @@ CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS                  
 * To start a stopped container, use `docker start` followed by the container ID or the container's name
 * To start the Ubuntu-based container with the ID of `3e5d18b36062`:
 
-```commandline
+```shell
 docker start 3e5d18b36062
 ```
 
 * The container will start
 * To see its status:
 
-```commandline
+```shell
 docker ps
 ```
 
@@ -291,7 +293,7 @@ CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS          PORTS   
 * To stop a running container, use `docker stop` followed by the container ID or name
 * For example, to use the assigned name, which in this case is `ecstatic_napier`:
 
-```commandline
+```shell
 docker stop ecstatic_napier
 ```
 
@@ -300,7 +302,7 @@ docker stop ecstatic_napier
 * Use the `docker ps -a` command to find the container ID or name for the container associated with the `hello-world`
 image and remove it:
 
-```commandline
+```shell
 docker ps -a
 ```
 
@@ -314,7 +316,7 @@ CONTAINER ID   IMAGE         COMMAND       CREATED          STATUS              
 
 * Remove the container using its name `practical_gates`:
 
-```commandline
+```shell
 docker rm practical_gates
 ```
 
@@ -334,7 +336,7 @@ docker rm practical_gates
 * To reuse this Node.js container as the basis for new images later, commit the changes to a new Docker image
 * Use the following command:
 
-```commandline
+```shell
 docker commit -m "What you did to the image" -a "Author Name" container_id repository/new_image_name
 ```
 
@@ -343,14 +345,14 @@ docker commit -m "What you did to the image" -a "Author Name" container_id repos
 * The `repository` is usually the user's username on Docker Hub
 * For example, for the user **owyaggy**, with the container ID of `3e5d18b36062`, the command would be:
 
-```commandline
+```shell
 docker commit -m "added Node.js" -a "owen" 3e5d18b36062 owyaggy/ubuntu-nodejs
 ```
 
 * When a user *commits* an image, the new image is saved locally on the user's computer
 * Listing the Docker images again will show the new image, as well as the old one it was derived from:
 
-```commandline
+```shell
 docker images
 ```
 
@@ -373,7 +375,7 @@ registry
 * An account is needed to push an image to Docker Hub or any other Docker registry
 * To push an image, first log into Docker Hub
 
-```commandline
+```shell
 docker login -u docker-registry-username
 ```
 
@@ -381,22 +383,207 @@ docker login -u docker-registry-username
   * Note: if the Docker registry username differs from the local username used to create the image, the image needs to be
   tagged with the registry username
     * For the example previously given, type:
-    * ```commandline
+    * ```shell
       docker tag owyaggy/ubuntu-nodejs docker-registry-username/ubuntu-nodejs
       ```
       
 * An image can now be pushed using:
 
-```commandline
+```shell
 docker push docker-registry-username/docker-image-name
 ```
 
 * To push the `ubuntu-nodejs` image to the `owyaggy` repository, the command would be:
 
-```commandline
+```shell
 docker push owyaggy/ubuntu-nodejs
 ```
 
 * After pushing an image to a registry, it should be listed in the user's account dashboard, under `Images` > `Hub`
 * Now, `docker pull owyaggy/ubuntu-nodejs` can be used to pull the image to a new machine adn use it to run a new
 container
+
+## Building And Deploying Flask With Docker
+
+### Setting Up Flask Application
+
+* First create a directory structure to hold the Flask application
+
+```shell
+sudo mkdir /var/www/yaggydev
+```
+
+* Move in to the newly created `yaggydev` directory:
+
+```shell
+cd /var/www/yaggydev
+```
+
+* Next, create the base folder structure for the Flask application:
+
+```shell
+sudo mkdir -p app/static app/templates
+```
+
+* The `-p` flag indicates that `mkdir` will create a directory and all parent directories that don't exist
+  * In this case, the `app` parent directory will be created in the process of making the `static` and `templates`
+  directories
+* The `app` directory will contain all files related to the Flask application such as its *views* and *blueprints*
+* [Views](https://flask.palletsprojects.com/en/2.0.x/tutorial/views/) are the code that responds to requests to the
+application
+* *Blueprints* create application components and support common patterns within an application or across multiple
+applications
+* The `static` directory is where assets such as images, CSS, and JavaScript files live
+* The `templates` directory is where HTML templates for the project are located
+* Now, given the base folder structure, create the files needed to run the Flask application
+* First create an `__init__.py` file inside the `app` directory
+  * This file tells the Python interpreter that the `app` directory is a package and should be treated as such
+* Run the following command to create the file:
+
+```shell
+sudo nano app/__init__.py
+```
+
+* Next, add code to the `__init__.py` that will create a Flask instance and import the logic from the `views.py` file
+* Add the following code to the new file:
+
+`/var/www/yaggydev/app/__init__.py`:
+
+```python
+from flask import Flask
+app = Flask(__name__)
+from app import views
+```
+
+* Now, create the `views.py` file in the `app` directory
+  * This file will contain most of the application logic
+
+```shell
+sudo nano app/views.py
+```
+
+* Add the code to the `views.py` file
+* This code will return the `hello world!` string to users who visit the web page:
+
+`/var/www/yaggydev/app/views.py`:
+
+```python
+from app import app
+
+@app.route('/')
+def home():
+   return "hello world!"
+```
+
+* Now create the `uwsgi.ini` file
+* uWSGI is a deployment option for Nginx that is both a protocol and an application server
+  * The application server can serve uWSGI, FastCGI, and HTTP protocols
+* To create this file, run:
+
+```shell
+sudo nano uwsgi.ini
+```
+
+* Next, add the following content to the file to configure the uWSGI server:
+
+`/var/www/yaggydev/uwsgi.ini`:
+
+```ini
+[uwsgi]
+module = main
+callable = app
+master = true
+```
+
+* This code defines the module that the Flask application will be served from
+* In this case, this is the `main.py` file, referenced here as `main`
+* The `callable` option instructs uWSGI to use the `app` instance exported by the main application
+* The `master` option allows the application to keep running, so there is little downtime even when reloading the entire
+application
+* Next, create the `main.py` file, which is the entry point to the application
+* The entry point instructs uWSGI on how to interact with the application
+
+```shell
+sudo nano main.py
+```
+
+* In the file, import the Flask instance named `app` from the application package that was previously created
+
+`/var/www/yaggydev/main.py`:
+
+```shell
+from app import app
+```
+
+* Finally, create a `requirements.txt` file to specify the dependencies that the `pip` package manager will install to
+the Docker deployment
+
+```shell
+sudo nano requirements.txt
+```
+
+* Add the following line to add Flask as a dependency:
+
+`/var/www/yaggydev/requirements.txt`:
+
+```text
+Flask>=3.0.2
+```
+
+* This specifies the version of Flask to be installed
+
+### Setting Up Docker
+
+* To create the Docker deployment, two files will be created:
+  * `Dockerfile`, a text document that contains the commands used to assemble the image
+  * `start.sh`, a shell script that will build an image and create a container from the `Dockerfile`
+* First create the `Dockerfile`:
+
+```shell
+sudo nano Dockerfile
+```
+
+* This Docker image will be built off an existing image, `tiangolo/uwsgi-nginx-flask` (found on
+[DockerHub](https://hub.docker.com/r/tiangolo/uwsgi-nginx-flask))
+* The first two lines specify the parent image used to run the application and install the bash command processor and
+the `nano` text editor
+* It also installs the `git` client for pulling and pushing to version control hosting services (GitHub, GitLab,
+BitBucket, etc.)
+* `ENV STATIC_URL /static` is an environment variable specific to this Docker image
+  * It defines the static folder where all assets such as images, CSS files, and JavaScript files are served from
+* The last two lines will copy the `requirements.txt` file into the container so that it can be executed, and then
+parses the `requirements.txt` file to install the specified dependencies
+* Now ensure there is an open port to use in the configuration
+* To check if a port is free, run:
+
+```shell
+sudo nc localhost 56733 < /dev/null; echo $?
+```
+
+* If the output of the command above is `1`, then the port is free and usable
+* Otherwise, a different port should be used in the `start.sh` configuration file
+* Once an open port has been found, create the `start.sh` script:
+
+```shell
+sudo nano start.sh
+```
+
+* `start.sh` is a shell script that will build an image from the `Dockerfile` and create a container from the resulting
+Docker image
+* Add the configuration to the new file:
+
+```shell
+#!/bin/bash
+app="docker.test"
+docker build -t ${app} .
+docker run -d -p 56733:80 \
+  --name=${app} \
+  -v $PWD:/app ${app}
+```
+
+* The first line is the *shebang*, which specifies that this is a bash file and will be executed as commands
+* The next line specifies the name to give the image and container and saves as a variable named `app`
+* The next line instructs Docker to build an image from the `Dockerfile` located in the current directory
+  * This will create an image called `docker.test` in this example
+
+# UNFINISHED: start with "the last three lines"
