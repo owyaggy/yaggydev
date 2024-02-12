@@ -323,3 +323,80 @@ docker rm practical_gates
 * See the `docker run help` command for more information on these options and others
 
 ### Committing Changes In A Container To A Docker Image
+
+* In a Docker image, files can be crated, modified, and deleted just like in a virtual machine
+* The changes will only apply to that container
+* It can be started and stopped
+* Once it's destroyed with the `docker rm` command, the changes are permanently lost
+* The state of a container can be saved as a new Docker image
+* For example, after installing Node.js inside the Ubuntu container, there is a container running off an image
+* However, the container is different from the image used to create it
+* To reuse this Node.js container as the basis for new images later, commit the changes to a new Docker image
+* Use the following command:
+
+```commandline
+docker commit -m "What you did to the image" -a "Author Name" container_id repository/new_image_name
+```
+
+* The **-m** switch is for the commit message that describes the changes made
+* The **-a** switch is to specify the author
+* The `repository` is usually the user's username on Docker Hub
+* For example, for the user **owyaggy**, with the container ID of `3e5d18b36062`, the command would be:
+
+```commandline
+docker commit -m "added Node.js" -a "owen" 3e5d18b36062 owyaggy/ubuntu-nodejs
+```
+
+* When a user *commits* an image, the new image is saved locally on the user's computer
+* Listing the Docker images again will show the new image, as well as the old one it was derived from:
+
+```commandline
+docker images
+```
+
+`Output`:
+
+```
+REPOSITORY              TAG       IMAGE ID       CREATED              SIZE
+owyaggy/ubuntu-nodejs   latest    b1acbebf9703   About a minute ago   210MB
+...
+```
+
+* In this example, `ubuntu-nodejs` is the new image, which was derived from the existing `ubuntu` image from Docker Hub
+* The size difference reflects the changes that were made
+* Images can also be built from a `Dockerfile`, which can automate the installation of software in a new image
+
+### Pushing Docker Images To A Docker Repository
+
+* If a new image is created from an existing image, it can be shared with a select few, on Docker Hub, or another Docker
+registry
+* An account is needed to push an image to Docker Hub or any other Docker registry
+* To push an image, first log into Docker Hub
+
+```commandline
+docker login -u docker-registry-username
+```
+
+* This should be followed by a prompt to authenticate via password
+  * Note: if the Docker registry username differs from the local username used to create the image, the image needs to be
+  tagged with the registry username
+    * For the example previously given, type:
+    * ```commandline
+      docker tag owyaggy/ubuntu-nodejs docker-registry-username/ubuntu-nodejs
+      ```
+      
+* An image can now be pushed using:
+
+```commandline
+docker push docker-registry-username/docker-image-name
+```
+
+* To push the `ubuntu-nodejs` image to the `owyaggy` repository, the command would be:
+
+```commandline
+docker push owyaggy/ubuntu-nodejs
+```
+
+* After pushing an image to a registry, it should be listed in the user's account dashboard, under `Images` > `Hub`
+* Now, `docker pull owyaggy/ubuntu-nodejs` can be used to pull the image to a new machine adn use it to run a new
+container
