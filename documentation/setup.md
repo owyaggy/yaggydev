@@ -22,8 +22,8 @@
 ssh root@203.0.113
 ```
 * Respond yes when asked if you want to continue connecting
-* You'll receive confirmation that the IP address has been added to the lis tof known hosts
-* Might receive a remote host identification warning, particularly if just having destryoyed a Droplet
+* You'll receive confirmation that the IP address has been added to the list of known hosts
+* Might receive a remote host identification warning, particularly if just having destroyed a Droplet
 
 ### Create New User
 
@@ -140,7 +140,7 @@ sudo ufw app list
 
 There are three profiles available for Nginx:
 
-* **Nginx Full**: This profile open both port 80 (normal, unecrypted web traffic) and port 443 (TLS/SSL encrypted
+* **Nginx Full**: This profile open both port 80 (normal, unencrypted web traffic) and port 443 (TLS/SSL encrypted
 traffic)
 * **Nginx HTTP**: This profile opens only port 80
 * **Nginx HTTPS**: This profile opens only port 443
@@ -651,7 +651,7 @@ if __name__ == "__main__":
 * Now it's time to configure Gunicorn
 * First check that Gunicorn can serve the application correctly
   * Try passing Gunicorn the name of the application's entry point
-    * Constructed as the name of the module (minus the `.py`) extension), plus the name of the callable within the
+    * Constructed as the name of the module (minus the `.py` extension), plus the name of the callable within the
 application (in this case, `wsgi:app`)
   * Also specify the interface and port to bind to using the `0.0.0.0:5000` argument to the application will be started
 on a publicly available interface:
@@ -781,7 +781,7 @@ server {
 ```
 
 * Save and close the file when finished
-* To enable the Nginx server block configuration file that was just created, link the filw to the `sites-enabled`
+* To enable the Nginx server block configuration file that was just created, link the file to the `sites-enabled`
 directory:
 
 ```commandline

@@ -543,6 +543,18 @@ Flask>=3.0.2
 sudo nano Dockerfile
 ```
 
+`/var/www/yaggydev/Dockerfile`:
+
+```dockerfile
+# Python version changed to more modern, *non-alpine* version
+FROM tiangolo/uwsgi-nginx-flask:python3.11
+# RUN apk --update add bash nano # This line commented out because it threw an error...
+ENV STATIC_URL /static
+ENV STATIC_PATH /var/www/app/static
+COPY ./requirements.txt /var/www/requirements.txt
+RUN pip install -r /var/www/requirements.txt
+```
+
 * This Docker image will be built off an existing image, `tiangolo/uwsgi-nginx-flask` (found on
 [DockerHub](https://hub.docker.com/r/tiangolo/uwsgi-nginx-flask))
 * The first two lines specify the parent image used to run the application and install the bash command processor and
@@ -585,5 +597,116 @@ docker run -d -p 56733:80 \
 * The next line specifies the name to give the image and container and saves as a variable named `app`
 * The next line instructs Docker to build an image from the `Dockerfile` located in the current directory
   * This will create an image called `docker.test` in this example
+* The last three lines create a new container named `docker.test` that is exposed at port `56733`
+* Finally, it links the present directory to the `/var/www` directory of the container
+* The `-d` flag is used to start a container in daemon mode, or as a background process
+* The `-p` flag binds a port on the server to a particular port on the Docker container
+  * In this case, binding port `56733` to port `80` on the Docker container
+* The `-v` flag specifies a Docker volume to mount on the container
+  * In this case, mounting the entire project directory to the `/var/www` folder on the Docker container
+* Execute the `start.sh` script to create the Docker image and build a container from the resulting image:
 
-# UNFINISHED: start with "the last three lines"
+```shell
+sudo bash start.sh
+```
+
+* After the script runs, list all running containers:
+
+```shell
+sudo docker ps
+```
+
+* The output should show the containers:
+
+`Output`:
+
+```text
+CONTAINER ID   IMAGE         COMMAND                  CREATED         STATUS         PORTS                                              NAMES
+e5d1ddd826d1   docker.test   "/entrypoint.sh /sta…"   7 seconds ago   Up 4 seconds   443/tcp, 0.0.0.0:56733->80/tcp, :::56733->80/tcp   docker.test
+```
+
+* The `docker.test` container should be running
+* Now visit the IP address at the specified port in the browser: `http://ip-address:56733`
+* A simple "hello world" page should be displayed
+
+### Serving Template Files
+
+* [Templates](https://flask.palletsprojects.com/en/2.0.x/tutorial/templates/) display static and dynamic content to
+users who visit the application
+* Start by creating a `home.html` file in the `app/templates` directory:
+
+```shell
+sudo nano app/templates/home.html
+```
+
+* Add some template code:
+
+`/var/www/yaggydev/app/templates/home.html`:
+
+```html
+<!doctype html>
+
+<html lang="en-us">   
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Welcome home</title>
+  </head>
+  
+  <body>
+    <h1>Home Page</h1>
+    <p>This is the home page of our application.</p>
+  </body> 
+</html>
+```
+
+* Next, modify `app/views.py` file to serve the newly created file:
+
+```shell
+sudo nano app/views.py
+```
+
+* Add a line at the beginning of the file to import the `render_template` method from Flask
+  * This method parses an HTML file to render a web page to the user
+
+```python
+from flask import render_template
+...
+```
+
+* At the end of the file, add a new route to render the template file
+* This code specifies that users are served the contents of the `home.html` file whenever they visit the `/template`
+route on the application
+
+```python
+...
+@app.route('/template')
+def template():
+    return render_template('home.html')
+```
+
+* The updated `app/views.py` file will look like this:
+
+`/var/www/yaggydev/app/views.py`:
+
+```python
+from flask import render_template
+from app import app 
+
+@app.route('/')
+def home():
+    return "hello world!"
+
+@app.route('/template')
+def template():
+    return render_template('home.html')
+```
+
+* In order for the changes to take effect, the Docker container will need to be stopped and restarted
+* Run the following command to rebuild the container:
+
+```shell
+sudo docker stop docker.test && sudo docker start docker.test
+```
+
+* Visit the application at `http://ip-address:56733/template` to see the new template being served
