@@ -70,10 +70,6 @@ var(--theme-blue)
     }
 }
 
-/*.grid-sizer {
-    margin: 0;
-}*/
-
 .grid {
     position: relative;
     width: 100%;
@@ -89,4 +85,54 @@ var(--theme-blue)
   display: block;
   width: 100%;
   height: auto;
+}
+
+.tag-python {
+    color: white;
+    background-color: blue;
+}
+
+.tag-streamlit {
+    color: white;
+    background-color: rgb(255, 0, 0);
+}
+
+.tag-web-frameworks {
+    color: rgb(20, 20, 20);
+    background-color: rgb(85, 255, 0);
+}
+
+.tag-web-hosting {
+    color: white;
+    background-color: rgb(136, 0, 255);
+}
+
+.tag-wordpress {
+    color: white;
+    background-color: rgb(80, 80, 80);
+}
+
+.tag-html {
+    color: white;
+    background-color: rgb(255, 106, 0);
+}
+
+.tag-css {
+    color: white;
+    background-color: pink;
+}
+
+.tag-javascript {
+    color: black;
+    background-color: yellow;
+}
+
+.tag-pandas {
+    color: white;
+    background-color: green;
+}
+
+.tag-documentation {
+    color: black;
+    background-color: cyan;
 }
