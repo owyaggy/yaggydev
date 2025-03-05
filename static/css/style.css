@@ -1,5 +1,5 @@
 :root {
-    --theme-blue: #0A1626;
+    --theme-blue: #0a1626;
     --theme-steel: #A4B5BF;
     --theme-tan: #BFA380;
     --theme-beige: #8C7961;
@@ -30,4 +30,109 @@ var(--theme-blue)
 .bi:hover {
     opacity: 1;
     animation-duration: 0.8s;
+}
+
+.custom-card {
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  
+.custom-card:hover {
+    cursor: pointer;
+    box-shadow: -5px 7px 1px rgba(90, 102, 118, 0.5);
+    transform: translate(5px, -7px);
+  }
+
+.grid-sizer, .grid-item {
+    width: calc((100% - 116px) / 5);
+}
+
+@media (max-width: 1624px) {
+    .grid-sizer, .grid-item {
+        width: calc((100% - 92px) / 4);
+    }
+}
+
+@media (max-width: 1276px) {
+    .grid-sizer, .grid-item {
+        width: calc((100% - 68px) / 3);
+    }
+}
+
+@media (max-width: 886px) {
+    .grid-sizer, .grid-item {
+      width: calc((100% - 44px) / 2);
+    }
+}
+
+@media (max-width: 496px) {
+    .grid-sizer, .grid-item {
+      width: calc((100% - 20px));
+    }
+}
+
+.grid {
+    position: relative;
+    width: 100%;
+    margin: 20px auto;
+  }
+
+.grid-item {
+    margin-bottom: 12px;
+}
+
+
+.card-img-top {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.tag-python {
+    color: white;
+    background-color: blue;
+}
+
+.tag-streamlit {
+    color: white;
+    background-color: rgb(255, 0, 0);
+}
+
+.tag-web-frameworks {
+    color: rgb(20, 20, 20);
+    background-color: rgb(85, 255, 0);
+}
+
+.tag-web-hosting {
+    color: white;
+    background-color: rgb(136, 0, 255);
+}
+
+.tag-wordpress {
+    color: white;
+    background-color: rgb(80, 80, 80);
+}
+
+.tag-html {
+    color: white;
+    background-color: rgb(255, 106, 0);
+}
+
+.tag-css {
+    color: white;
+    background-color: rgb(252, 142, 161);
+}
+
+.tag-javascript {
+    color: black;
+    background-color: yellow;
+}
+
+.tag-pandas {
+    color: white;
+    background-color: green;
+}
+
+.tag-documentation {
+    color: black;
+    background-color: cyan;
 }
