@@ -15,4 +15,10 @@ git merge staging
 git push origin main
 ```
 
+## Deploying new `main` branch
+
+```sh
+git push deploy main
+```
+
 Alternatively, use **Pull Requests**.
