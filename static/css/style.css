@@ -119,7 +119,7 @@ var(--theme-blue)
 
 .tag-css {
     color: white;
-    background-color: pink;
+    background-color: rgb(252, 142, 161);
 }
 
 .tag-javascript {
